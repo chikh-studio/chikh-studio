@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chikh — Industrial Design</title>
+<meta name="description" content="Chikh — independent industrial design practice by Dmitry Chikh. Furniture, lighting, and objects, from first idea to production-ready form.">
+<meta name="theme-color" content="#f6f4f1">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<!-- NOTE: after deploy, replace og:image / twitter:image with the full absolute URL (https://yourdomain.com/assets/og.jpg) and add og:url -->
+<meta property="og:title" content="Chikh — Industrial Design">
+<meta property="og:description" content="Independent industrial design practice. Furniture, lighting, and objects — from first idea to production-ready form.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chikh — Industrial Design">
+<meta name="twitter:description" content="Independent industrial design practice. Furniture, lighting, and objects.">
+<meta name="twitter:image" content="assets/og.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Dmitry Chikh","jobTitle":"Industrial Designer","email":"mailto:dmitrchikh@gmail.com","telephone":"+79854803232","knowsAbout":["Industrial design","Furniture design","Lighting design"]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4f1;
+  --ink:#16140f;
+  --mut:#74706a;
+  --dim:#827d75;
+  --line:#e2ded8;
+  --accent:#7f1e2d;
+  --fs:'Newsreader',Georgia,serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --e:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--fb);
+  font-weight:400;line-height:1.5;overflow-x:hidden;
+  cursor:none;
+}
+a{color:inherit;text-decoration:none;}
+img,video{display:block;max-width:100%;}
+::selection{background:var(--accent);color:var(--bg);}
+
+/* ── CURSOR ── */
+.cur{position:fixed;width:7px;height:7px;border-radius:50%;background:var(--ink);
+  pointer-events:none;z-index:9000;transform:translate(-50%,-50%);transition:width .3s var(--e),height .3s var(--e),background .3s;}
+.cur.big{width:54px;height:54px;background:rgba(127,30,45,.12);}
+@media(hover:none){.cur{display:none;}body{cursor:auto;}}
+
+/* ══ INTRO ══ */
+#intro{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+#intro.gone{opacity:0;pointer-events:none;transition:opacity .6s var(--e);}
+.intro-word{overflow:hidden;}
+.intro-word span{
+  display:block;font-family:var(--fs);font-weight:300;
+  font-size:clamp(2.6rem,7vw,6rem);letter-spacing:-.02em;
+  transform:translateY(110%);animation:iUp 1s .15s var(--e) forwards;
+}
+@keyframes iUp{to{transform:translateY(0);}}
+#intro-pct{position:absolute;right:2.5rem;bottom:2.2rem;font-family:var(--fs);font-size:.85rem;color:var(--mut);font-variant-numeric:tabular-nums;}
+#intro-bar{position:absolute;left:0;bottom:0;height:1px;background:var(--ink);width:0;}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.6rem 2.5rem;mix-blend-mode:difference;
+}
+.nav-logo{font-family:var(--fs);font-weight:400;font-size:1.6rem;letter-spacing:-.01em;color:#fff;}
+.nav-r{display:flex;gap:2.2rem;}
+.nav-r a{font-size:.7rem;font-weight:400;letter-spacing:.02em;color:#fff;text-transform:lowercase;position:relative;}
+.nav-r a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1px;background:#fff;transition:width .4s var(--e);}
+.nav-r a:hover::after{width:100%;}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;align-items:flex-end;}
+.hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:2.5rem;padding-bottom:5rem;max-width:none;width:100%;}
+.hero-eyebrow{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:2rem;}
+.hero-h{font-family:var(--fs);font-weight:300;font-size:clamp(3rem,7vw,7.5rem);line-height:1.0;letter-spacing:-.02em;}
+.hero-h em{font-style:italic;color:var(--accent);}
+.hero-sub{margin-top:1.6rem;max-width:30ch;font-size:.82rem;line-height:1.7;color:var(--mut);}
+.hero-r{position:relative;overflow:hidden;background:#1a0a0a;}
+.hero-r img{width:100%;height:100%;object-fit:cover;}
+.hero-scroll{position:absolute;left:2.5rem;bottom:2rem;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:.6rem;}
+.hero-scroll::before{content:'';width:30px;height:1px;background:var(--dim);}
+
+
+#hero3d{position:absolute;inset:0;z-index:0;pointer-events:none;}
+#hero3d canvas{display:block;}
+.hero{position:relative;overflow:hidden;}
+.hero-l{position:relative;z-index:2;}
+
+/* ══ WORK ══ */
+.work{padding:7rem 2.5rem 3rem;}
+.work-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:1.4rem;margin-bottom:0;}
+.work-head h2{font-family:var(--fs);font-weight:300;font-size:clamp(1.6rem,2.6vw,2.4rem);letter-spacing:-.01em;}
+.work-head .count{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+
+/* index list */
+.idx-row{
+  display:grid;grid-template-columns:3rem 1fr auto auto;gap:2rem;align-items:center;
+  padding:1.5rem 0;border-bottom:1px solid var(--line);cursor:none;position:relative;
+}
+.idx-num{font-size:.7rem;color:var(--dim);font-variant-numeric:tabular-nums;}
+.idx-name{font-family:var(--fs);font-weight:300;font-size:clamp(1.3rem,2.4vw,2rem);letter-spacing:-.01em;transition:transform .5s var(--e),color .4s;}
+.idx-cat{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);}
+.idx-year{font-size:.72rem;color:var(--dim);font-variant-numeric:tabular-nums;}
+.idx-row:hover .idx-name{transform:translateX(14px);color:var(--accent);}
+
+/* floating preview */
+#preview{position:fixed;width:420px;height:520px;pointer-events:none;z-index:400;opacity:0;background:var(--bg);
+  transform:translate(-50%,-50%) scale(.96);transition:opacity .4s var(--e),transform .5s var(--e);overflow:hidden;}
+#preview.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#preview img,#preview video{width:100%;height:100%;object-fit:contain;}
+
+
+/* ══ ABOUT ══ */
+.about{padding:8rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
+.about-lbl{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);}
+.about-h{font-family:var(--fs);font-weight:300;font-size:clamp(1.8rem,3vw,3rem);line-height:1.12;letter-spacing:-.02em;}
+.about-h em{font-style:italic;color:var(--accent);}
+.about-body p{font-size:.85rem;line-height:1.85;color:var(--mut);margin-bottom:1.2rem;max-width:42ch;}
+.about-meta{margin-top:2.5rem;display:flex;flex-direction:column;gap:.8rem;}
+.about-meta div{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:.8rem;font-size:.72rem;}
+.about-meta span:first-child{color:var(--dim);text-transform:uppercase;letter-spacing:.1em;}
+
+/* ══ CONTACT ══ */
+.contact{padding:8rem 2.5rem 4rem;border-top:1px solid var(--line);}
+.contact-h{font-family:var(--fs);font-weight:300;font-size:clamp(2.6rem,6vw,6rem);line-height:1;letter-spacing:-.03em;margin-bottom:3rem;}
+.contact-h em{font-style:italic;color:var(--accent);}
+.contact-grid{display:flex;gap:5rem;flex-wrap:wrap;}
+.contact-col .k{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:.7rem;}
+.contact-col a,.contact-col p{font-family:var(--fs);font-weight:300;font-size:1.15rem;color:var(--ink);}
+.contact-col a{position:relative;}
+.contact-col a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--accent);transition:width .4s var(--e);}
+.contact-col a:hover::after{width:100%;}
+
+
+.contact-cta{font-family:var(--fb);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:1.15rem 2.6rem;background:var(--accent);color:var(--bg);border:none;border-radius:100px;cursor:none;margin-top:2.5rem;transition:transform .35s var(--e),opacity .3s;}
+.contact-cta:hover{transform:translateY(-3px);opacity:.92;}
+footer{padding:4rem 2.5rem 3rem;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.5rem;border-top:1px solid var(--line);}
+.ft-col{display:flex;flex-direction:column;gap:.55rem;}
+.ft-brand{font-family:var(--fs);font-size:1.5rem;color:var(--ink);letter-spacing:-.01em;line-height:1;}
+.ft-sub{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:.3rem;}
+.ft-h{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;}
+.ft-col a{font-size:.78rem;color:var(--mut);transition:color .3s;width:fit-content;}
+.ft-col a:hover{color:var(--accent);}
+.ft-end{align-items:flex-start;}
+.ft-copy{font-size:.66rem;color:var(--dim);letter-spacing:.02em;}
+@media(max-width:860px){footer{grid-template-columns:1fr 1fr;gap:2rem;}}
+@media(max-width:520px){footer{grid-template-columns:1fr;padding:3rem 1.6rem 2.5rem;}}
+
+
+/* ══ CONTACT DRAWER ══ */
+#cDrawer{position:fixed;inset:0;z-index:900;pointer-events:none;}
+#cDrawer.open{pointer-events:all;cursor:auto;}
+.cd-scrim{position:absolute;inset:0;background:rgba(20,18,14,0);transition:background .55s var(--e);}
+#cDrawer.open .cd-scrim{background:rgba(20,18,14,.42);}
+.cd-panel{position:absolute;top:0;right:0;height:100%;width:min(470px,100vw);background:var(--bg);
+  transform:translateX(100%);transition:transform .62s var(--e);overflow-y:auto;box-shadow:-24px 0 70px rgba(20,18,14,.16);}
+#cDrawer.open .cd-panel{transform:translateX(0);}
+.cd-x{position:absolute;top:1.6rem;right:1.6rem;background:none;border:none;font-size:.95rem;cursor:none;color:var(--ink);z-index:2;transition:transform .3s;}
+.cd-x:hover{transform:rotate(90deg);}
+.cd-inner{padding:5.5rem 2.6rem 3.5rem;}
+.cd-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin-bottom:1.6rem;}
+.cd-title{font-family:var(--fs);font-weight:300;font-size:2.5rem;line-height:1.04;letter-spacing:-.02em;margin-bottom:1.1rem;}
+.cd-title em{font-style:italic;color:var(--accent);}
+.cd-lead{font-size:.78rem;line-height:1.7;color:var(--mut);margin-bottom:1.5rem;}
+.cd-form{display:flex;flex-direction:column;gap:1.4rem;margin-bottom:1rem;}
+.cd-form input,.cd-form textarea{font-family:var(--fb);font-size:.88rem;padding:.6rem 0;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;outline:none;cursor:text;transition:border-color .35s;resize:none;}
+.cd-form input::placeholder,.cd-form textarea::placeholder{color:var(--dim);}
+.cd-form input:focus,.cd-form textarea:focus{border-bottom-color:var(--accent);}
+.cd-send{font-family:var(--fb);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:1rem;margin-top:.3rem;background:var(--accent);color:var(--bg);border:none;cursor:none;border-radius:100px;transition:opacity .3s,transform .3s;}
+.cd-send:hover{opacity:.9;transform:translateY(-1px);}
+.cd-or{display:flex;align-items:center;text-align:center;margin:1.8rem 0 1.2rem;color:var(--dim);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;}
+.cd-or::before,.cd-or::after{content:'';flex:1;height:1px;background:var(--line);}
+.cd-or span{padding:0 1rem;}
+.cd-direct{display:flex;flex-direction:column;margin-top:.3rem;border-top:1px solid var(--line);}
+.cd-link{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;border-bottom:1px solid var(--line);background:none;transition:padding-left .35s var(--e);cursor:none;}
+.cd-link:hover{padding-left:.6rem;}
+.cd-link span:first-child{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);}
+.cd-link span:last-child{font-family:var(--fs);font-size:.92rem;color:var(--ink);}
+@media(max-width:520px){.cd-inner{padding:5rem 1.6rem 2.5rem;}.cd-title{font-size:2rem;}}
+
+/* ══ PROJECT PAGE ══ */
+#pp{position:fixed;inset:0;z-index:800;background:var(--bg);transform:translateY(100%);transition:transform .8s var(--e);overflow-y:auto;}
+#pp.open{transform:translateY(0);}
+.pp-bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2.5rem;background:var(--bg);border-bottom:1px solid var(--line);}
+.pp-back{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;display:flex;align-items:center;gap:.6rem;padding:.4rem 0;}
+.pp-hero{height:78vh;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.pp-hero img,.pp-hero video{width:100%;height:100%;object-fit:contain;}
+.pp-info{display:grid;grid-template-columns:1fr 1fr;gap:5rem;padding:4rem 2.5rem;}
+.pp-num{font-size:.7rem;color:var(--dim);margin-bottom:1.5rem;}
+.pp-name{font-family:var(--fs);font-weight:300;font-size:clamp(2rem,4vw,3.6rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:.6rem;}
+.pp-client{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);}
+.pp-desc{font-size:.88rem;line-height:1.9;color:var(--mut);}
+.pp-specs{margin-top:2.5rem;}
+.pp-specs div{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:.85rem 0;font-size:.74rem;}
+.pp-specs span:first-child{color:var(--dim);text-transform:uppercase;letter-spacing:.1em;}
+
+
+.pp-gallery{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.pp-gal-img{overflow:hidden;background:var(--bg);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
+.pp-gal-img img{width:100%;height:100%;object-fit:contain;}
+.pp-gal-img:first-child{grid-column:1 / -1;aspect-ratio:16/10;}
+@media(max-width:760px){.pp-gallery{grid-template-columns:1fr;}.pp-gal-img:first-child{height:60vh;}}
+
+/* ── desktop: hide inline thumbs (hover preview used instead) ── */
+.idx-thumb{display:none;}
+
+
+/* ── PROJECT OPEN TEXT REVEAL ── */
+#pp .pp-num,#pp .pp-name,#pp .pp-client{opacity:0;transform:translateY(18px);}
+#pp.animate .pp-num{animation:ppReveal .55s .12s var(--e) forwards;}
+#pp.animate .pp-name{animation:ppReveal .7s .24s var(--e) forwards;}
+#pp.animate .pp-client{animation:ppReveal .6s .4s var(--e) forwards;}
+@keyframes ppReveal{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── responsive ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;}
+  .pp-info{grid-template-columns:1fr;gap:2rem;}
+}
+
+/* ══ MOBILE / TOUCH ══ */
+@media(max-width:760px){
+  /* nav */
+  nav{padding:1.2rem 1.4rem;}
+  .nav-logo{font-size:1.35rem;}
+  .nav-r{gap:1.4rem;}
+  .nav-r a{font-size:.74rem;}
+
+  /* hero */
+  .hero{min-height:88vh;min-height:88svh;align-items:flex-end;}
+  .hero-l{padding:2rem 1.4rem 3rem;width:100%;}
+  .hero-h{font-size:clamp(2.6rem,13vw,4rem);}
+  .hero-sub{max-width:34ch;}
+
+  /* work → single-column feed, every image same (full) width, natural height, no crop */
+  .work{padding:5rem 1.4rem 2.5rem;}
+  .work-head{padding-bottom:1.1rem;}
+  #idx{display:flex;flex-direction:column;gap:3rem;}
+  .idx-row{display:flex;flex-direction:column;align-items:flex-start;gap:.7rem;padding:0;border-bottom:none;}
+  .idx-thumb{display:block;width:100%;overflow:hidden;background:none;border-radius:0;}
+  .idx-thumb img,.idx-thumb video{width:100%;height:auto;object-fit:contain;display:block;}
+  .idx-num{display:none;}
+  .idx-name{font-size:1.15rem;line-height:1.12;transform:none !important;color:var(--ink) !important;}
+  .idx-cat{display:block;font-size:.62rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;}
+  .idx-year{display:inline;font-size:.62rem;color:var(--dim);margin-left:.5rem;}
+  #preview{display:none !important;}
+
+  /* project page — images full width, natural height, no crop, no bg */
+  .pp-bar{padding:1.2rem 1.4rem;}
+  .pp-hero{height:auto;background:none;display:block;}
+  .pp-hero img,.pp-hero video{width:100%;height:auto;object-fit:contain;display:block;}
+  .pp-info{padding:2.5rem 1.4rem;gap:1.5rem;}
+  .pp-name{font-size:clamp(1.8rem,9vw,2.6rem);}
+  .pp-gallery{grid-template-columns:1fr;gap:0;}
+  .pp-gal-img,.pp-gal-img:first-child{aspect-ratio:auto;height:auto;background:none;display:block;}
+  .pp-gal-img img{width:100%;height:auto;object-fit:contain;display:block;}
+
+  /* contact */
+  .contact{padding:5rem 1.4rem 3rem;}
+  .contact-h{font-size:clamp(2.4rem,12vw,4rem);}
+
+  /* drawer full width */
+  .cd-panel{width:100vw;}
+}
+
+@media(max-width:430px){
+  .hero-h{font-size:2.4rem;}
+}
+
+/* ══ A11Y / MISC ══ */
+html{scroll-behavior:smooth;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+:focus{outline:none;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+.cd-form input:focus-visible,.cd-form textarea:focus-visible{outline:none;border-bottom-color:var(--accent);}
+.idx-row:focus-visible{outline:2px solid var(--accent);outline-offset:6px;}
+button.pp-back{background:none;border:none;color:var(--ink);font-family:var(--fb);text-align:left;}
+.cd-form .err{border-bottom-color:#b3261e !important;}
+.cd-status{font-size:.72rem;line-height:1.6;margin-top:.9rem;color:var(--mut);display:none;}
+.cd-status.show{display:block;}
+.cd-status.error{color:#b3261e;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-delay:0s !important;transition-duration:.01ms !important;}
+  html{scroll-behavior:auto;}
+  #hero3d{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-word"><span>chikh</span></div>
+  <div id="intro-pct">0</div>
+  <div id="intro-bar"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">chikh</a>
+  <div class="nav-r">
+    <a href="#work">work</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div id="hero3d"></div>
+  <div class="hero-l">
+    <div class="hero-eyebrow">Dmitry Chikh — Industrial Design</div>
+    <h1 class="hero-h">Let's make<br><em>timeless design.</em></h1>
+    <p class="hero-sub">An independent practice working across furniture, lighting, and objects — from first idea to production-ready form.</p>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-head">
+    <h2>Selected work</h2>
+    <span class="count" id="workCount"></span>
+  </div>
+  <div id="idx"></div>
+</section>
+
+<!-- ABOUT -->
+
+
+<!-- CONTACT -->
+
+
+<footer>
+  <div class="ft-col">
+    <span class="ft-brand">chikh</span>
+    <span class="ft-sub">Industrial Design</span>
+  </div>
+  <div class="ft-col">
+    <span class="ft-h">Contact</span>
+    <a href="https://wa.me/79854803232" target="_blank">WhatsApp</a>
+    <a href="https://t.me/+79854803232" target="_blank">Telegram</a>
+    <a href="mailto:dmitrchikh@gmail.com">dmitrchikh@gmail.com</a>
+    <a href="tel:+79854803232">+7 985 480 32 32</a>
+  </div>
+  <div class="ft-col ft-end">
+    <span class="ft-copy">© 2026 Dmitry Chikh</span>
+    <span class="ft-copy">All rights reserved</span>
+  </div>
+</footer>
+
+<!-- FLOATING PREVIEW -->
+<div id="preview"></div>
+
+
+<!-- CONTACT DRAWER -->
+<div id="cDrawer">
+  <div class="cd-scrim"></div>
+  <aside class="cd-panel">
+    <button class="cd-x" aria-label="Close">✕</button>
+    <div class="cd-inner">
+      <div class="cd-eyebrow">Start a project</div>
+      <h2 class="cd-title">Let's make<br>something <em>lasting.</em></h2>
+      <p class="cd-lead">Tell me a little about what you're making — material, format, timeline. I read and reply to every message personally.</p>
+      <div class="cd-form">
+        <label class="sr-only" for="cfName">Name</label>
+        <input id="cfName" placeholder="Name" autocomplete="name" required>
+        <label class="sr-only" for="cfEmail">Email</label>
+        <input id="cfEmail" type="email" placeholder="Email" autocomplete="email" required>
+        <label class="sr-only" for="cfCompany">Company or brand (optional)</label>
+        <input id="cfCompany" placeholder="Company / brand (optional)" autocomplete="organization">
+        <label class="sr-only" for="cfMsg">What are you working on?</label>
+        <textarea id="cfMsg" rows="4" placeholder="What are you working on?" required></textarea>
+        <button class="cd-send" id="cfSend">Send enquiry →</button>
+        <p class="cd-status" id="cfStatus" role="status" aria-live="polite"></p>
+      </div>
+      <div class="cd-or"><span>or just say hello</span></div>
+      <p class="cd-lead">Prefer to skip the form? Write to me directly — no details needed, I'll take it from there.</p>
+      <div class="cd-direct">
+        <a href="https://wa.me/79854803232" target="_blank" class="cd-link"><span>WhatsApp</span><span>+7 985 480 32 32</span></a>
+        <a href="https://t.me/+79854803232" target="_blank" class="cd-link"><span>Telegram</span><span>+7 985 480 32 32</span></a>
+        <a href="mailto:dmitrchikh@gmail.com" class="cd-link"><span>Email</span><span>dmitrchikh@gmail.com</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- PROJECT PAGE -->
+<div id="pp">
+  <div class="pp-bar">
+    <button class="pp-back" id="ppBack">← index</button>
+    <button class="pp-back" id="ppClose" style="opacity:.5;">close</button>
+  </div>
+  <div class="pp-hero" id="ppHero"></div>
+  <div class="pp-gallery" id="ppGallery"></div>
+  <div class="pp-info">
+    <div>
+      <div class="pp-num" id="ppNum"></div>
+      <div class="pp-name" id="ppName"></div>
+      <div class="pp-client" id="ppClient"></div>
+    </div>
+    <div>
+      <div class="pp-desc" id="ppDesc"></div>
+      <div class="pp-specs" id="ppSpecs"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MAG_1="assets/mag_1_lg.webp";
+const MAG_2="assets/mag_2_lg.webp";
+const MAG_3="assets/mag_3_lg.webp";
+const MAG_4="assets/mag_4_lg.webp";
+const MAG_5="assets/mag_5_lg.webp";
+const TREUS_DOOR="assets/treus_door_lg.webp";
+const MAZE_1="assets/maze_1_lg.webp";
+const MAZE_2="assets/maze_2_lg.webp";
+const MAZE_3="assets/maze_3_lg.webp";
+const MAZE_4="assets/maze_4_lg.webp";
+const MAZE_5="assets/maze_5_lg.webp";
+const MAZE_6="assets/maze_6_lg.webp";
+const MAZE_7="assets/maze_7_lg.webp";
+const SLIDE_PEND="assets/slide_pend_lg.webp";
+const SLIDE_FIN="assets/slide_fin_lg.webp";
+const SLIDE_TABLE="assets/slide_table_lg.webp";
+const SLIDE_FLOOR="assets/slide_floor_lg.webp";
+const LUME_TABLE="assets/lume_table_lg.webp";
+const LUME_PEND="assets/lume_pend_lg.webp";
+const LUME_WALL="assets/lume_wall_lg.webp";
+const LUME_CLUSTER="assets/lume_cluster_lg.webp";
+const DRAPE_3="assets/drape_3_lg.webp";
+const ROPE_FRONT="assets/rope_front_lg.webp";
+const ROPE_LIFE="assets/rope_life_lg.webp";
+const ROPE_DETAIL="assets/rope_detail_lg.webp";
+const ROPE_SIDE="assets/rope_side_lg.webp";
+const DRAPE_PREV="assets/drape_prev_lg.webp";
+const DRAPE_2="assets/drape_2_lg.webp";
+const TREC_1="assets/trec_1_lg.webp";
+const TREC_2="assets/trec_2_lg.webp";
+const TREC_3="assets/trec_3_lg.webp";
+const TREC_4="assets/trec_4_lg.webp";
+const EMBER_1="assets/ember_1_lg.webp";
+const EMBER_2="assets/ember_2_lg.webp";
+const EMBER_3="assets/ember_3_lg.webp";
+const EMBER_4="assets/ember_4_lg.webp";
+const POLE_1="assets/pole_1_lg.webp";
+const POLE_2="assets/pole_2_lg.webp";
+const POLE_3="assets/pole_3_lg.webp";
+const POLE_4="assets/pole_4_lg.webp";
+const SHEP_1="assets/shep_1_lg.webp";
+const SHEP_2="assets/shep_2_lg.webp";
+const SHEP_3="assets/shep_3_lg.webp";
+const SHEP_4="assets/shep_4_lg.webp";
+const SHEP_5="assets/shep_5_lg.webp";
+const SHEP_6="assets/shep_6_lg.webp";
+const NABA_1="assets/naba_1_lg.webp";
+const NABA_2="assets/naba_2_lg.webp";
+const NABA_3="assets/naba_3_lg.webp";
+const CORD_1="assets/cord_1_lg.webp";
+const CORD_2="assets/cord_2_lg.webp";
+const CORD_3="assets/cord_3_lg.webp";
+const CORD_4="assets/cord_4_lg.webp";
+const LIMAN_HERO="assets/liman_hero_lg.webp";
+const LIMAN_PAIR="assets/liman_pair_lg.webp";
+const LIMAN_ANGLE="assets/liman_angle_lg.webp";
+const LIMAN_ARM="assets/liman_arm_lg.webp";
+const LIMAN_TOP="assets/liman_top_lg.webp";
+const LIMAN_LEG="assets/liman_leg_lg.webp";
+const BURG_1="assets/burg_1_lg.webp";
+const BURG_2="assets/burg_2_lg.webp";
+const BURG_3="assets/burg_3_lg.webp";
+const BURG_4="assets/burg_4_lg.webp";
+const BURG_5="assets/burg_5_lg.webp";
+const IMG2="assets/img2_lg.webp";
+const VIDEO="assets/video.mp4";
+
+const SM=s=>s.replace('_lg.','_sm.');
+const TILE=s=>s.replace('_lg.','_tile.');
+const slugOf=p=>p.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const PROJECTS=[
+  {n:'Liman',c:'Boca Room',cat:'Furniture',y:2024,
+   prev:LIMAN_HERO,hover:LIMAN_ARM,page:LIMAN_HERO,
+   gallery:[LIMAN_HERO,LIMAN_PAIR,LIMAN_ANGLE,LIMAN_ARM,LIMAN_TOP,LIMAN_LEG],
+   desc:'Liman is a lounge chair designed for Boca Room and produced for outdoor living. More than comfortable, it is made to catch the eye — an expressive silhouette where the interplay of frame lines and a delicate cord weave create a distinctive presence. A powder-coated tubular frame carries a hand-woven outdoor cord seat and back, equally at home on a terrace, a lawn, or beside a fire. The structure stays light and graphic while the weaving softens it to the touch. But the essential remains unchanged: Liman is built for slow hours outdoors and for real, lasting comfort.',
+   specs:{Material:'Powder-coated steel, woven outdoor cord',Type:'Outdoor lounge chair',Client:'Boca Room',Finish:'Matte black',Use:'Outdoor / terrace',Year:'2024'}},
+  {n:'Ananke Lamp Collection',c:'Maytoni × BHSAD',cat:'Lighting',y:2024,
+   prev:VIDEO,prevVideo:true,page:VIDEO,pageVideo:true,
+   desc:'A collection of lamps completed in January 2024 for a competition organised by the British Higher School of Art and Design and Maytoni. Inspired by the myth of Ananke and the Moirai — the goddess of fate who spins the spindle while her daughters Clotho, Lachesis, and Atropos pass, measure, and cut the thread of life. Four pieces: a table lamp, a floor lamp, and two wall lamps. The defining feature is a multi-axis mechanism that allows the light to be directed in any direction.',
+   specs:{Material:'Metal, LED',Dimensions:'Floor H 1650 · Table H 520mm',Year:'2024',Client:'Maytoni × BHSAD'}},
+  {n:'Cordon',c:'Storage & Surfaces',cat:'Furniture',y:2025,
+   prev:CORD_1,hover:CORD_3,page:CORD_3,
+   gallery:[CORD_3,CORD_1,CORD_4,CORD_2],
+   desc:'Cordon extends the woven language of the studio into storage and surfaces. The collection — a bar cart, a coffee table, a side table, and a modular shelving system — is built from the same hand-woven cord and tubular frame, finished in deep oxblood. Where the seating explores tension and lightness, Cordon explores containment: woven panels wrap drawers and cabinets, while tinted glass fronts quietly reveal what is held inside. The modular shelving scales from a single bay to a full wall, adapting to the room rather than dictating it. Each piece moves easily between a living room, a study, or a calm corner of a hospitality space.',
+   specs:{Material:'Tubular metal, woven cord, tinted glass',Pieces:'Bar cart · Coffee table · Side table · Shelving',Finish:'Oxblood',Configuration:'Modular',Year:'2025'}},
+  {n:'Naba',c:'Bathroom Fittings',cat:'Objects',y:2025,
+   prev:NABA_1,hover:NABA_3,page:NABA_1,
+   gallery:[NABA_1,NABA_3,NABA_2],
+   desc:'Naba is a collection of bathroom fittings that treats the tap as a sculptural object rather than a utility. A single curved gooseneck defines the family — drawn as one continuous arc across the freestanding bath filler, the basin mixer, and the deck-mounted bath set. The brushed oxblood finish is unusual in sanitaryware, where chrome and matte black dominate; here it brings warmth and a quiet confidence to the room. Each lever is reduced to a single soft tab, sitting flush against the body. The collection is made for considered residential bathrooms and boutique hospitality, where every surface is chosen with intent.',
+   specs:{Material:'Brushed metal',Pieces:'Bath filler · Basin mixer · Deck set',Finish:'Brushed oxblood',Application:'Residential · Hospitality',Year:'2025'}},
+  {n:'Shepard',c:'Modular Seating',cat:'Furniture',y:2025,
+   prev:SHEP_1,hover:SHEP_2,page:SHEP_2,
+   gallery:[SHEP_2,SHEP_1,SHEP_6,SHEP_3,SHEP_5,SHEP_4],
+   desc:'Shepard is a modular seating system built on a single idea — a generous upholstered volume resting on a floating wooden plinth. The collection is fully configurable, moving from a single armless seat through corner sections, chaises, and ottomans to a room-spanning U-shape. Each module sits on a warm walnut base that lifts the form just clear of the floor, giving it weight and lightness at once. Deep seats and soft loose cushions invite long, unhurried sitting, while the quiet oatmeal upholstery keeps the whole system calm and architectural. Shepard is made for open living spaces where the sofa defines the room rather than lines its edge.',
+   specs:{Material:'Upholstery, solid walnut base',Configuration:'Fully modular',Pieces:'Seat · Corner · Chaise · Ottoman',Seat:'Deep, low profile',Year:'2025'}},
+  {n:'Pole',c:'Lighting Collection',cat:'Lighting',y:2025,
+   prev:POLE_1,hover:POLE_3,page:POLE_1,
+   gallery:[POLE_1,POLE_2,POLE_4,POLE_3],
+   desc:'Pole is a lighting family built from a single element — a slim tubular stem carrying a soft, disc-shaped diffuser. The collection spans a table lamp, a wall sconce, a pendant, and a ceiling fixture, each resolving the same gesture at a different scale. The flat disc head tilts and rotates on its pole, directing a warm, edge-lit glow exactly where it is wanted. Finished in deep oxblood, the fittings read as quiet sculptural punctuation rather than hardware — equally at home on a desk, beside a bed, or grouped across a ceiling. The minimal tubular language keeps the system light, while the soft circular source gives every room a calm, ambient warmth.',
+   specs:{Material:'Powder-coated metal, opal diffuser, LED',Pieces:'Table · Wall · Pendant · Ceiling',Finish:'Oxblood',Light:'Warm, edge-lit',Year:'2025'}},
+  {n:'Ember',c:'Lighting Collection',cat:'Lighting',y:2025,
+   prev:EMBER_4,hover:EMBER_3,page:EMBER_1,
+   gallery:[EMBER_1,EMBER_3,EMBER_2,EMBER_4],
+   desc:'Ember is a lighting collection centred on a single material gesture — a translucent oxblood glass shade that holds the light like a warm coal. The conical form is carried across a linear pendant, a wall sconce, an arc floor lamp, and a single pendant, each pairing the glowing glass with a slim powder-coated stem. Light passes through the tinted glass and pools at the rim, giving a soft amber warmth rather than a hard beam. The deep burgundy reads almost black until lit, then comes alive — a quiet object by day, a warm presence by evening. Ember is made for dining rooms, bars, and intimate spaces where light sets the mood.',
+   specs:{Material:'Tinted glass, powder-coated metal, LED',Pieces:'Linear · Wall · Arc floor · Pendant',Finish:'Oxblood glass',Light:'Soft amber, diffused',Year:'2025'}},
+  {n:'Treccia',c:'Cutlery Collection',cat:'Objects',y:2025,
+   prev:TREC_1,hover:TREC_4,page:TREC_3,
+   gallery:[TREC_3,TREC_1,TREC_2,TREC_4],
+   desc:'Treccia carries the studio\'s woven language to the dining table. Each piece pairs an antiqued bronze head with a handle wrapped in hand-woven leather — the same plaited texture found across the furniture. The collection is quietly modular: heads thread onto handles, so a worn handle can be re-wrapped or a finish swapped without replacing the whole piece. The bronze develops a soft patina with use, while the leather warms and deepens over years of dinners. Treccia is made for the table as a place of ritual — knife, fork, spoon, and teaspoon, weighted to sit comfortably in the hand and to last a lifetime of meals.',
+   specs:{Material:'Antiqued bronze, hand-woven leather',Pieces:'Knife · Fork · Spoon · Teaspoon',Construction:'Modular, threaded',Finish:'Patinated bronze',Year:'2025'}},
+  {n:'Drape',c:'Lounge Chair',cat:'Furniture',y:2025,
+   prev:DRAPE_PREV,page:DRAPE_PREV,
+   desc:'Drape is a lounge chair reduced to two elements — a slim tubular frame and a single piece of cloth draped across it. The fabric is hung rather than upholstered, sagging gently into a seat and back that cradle the body with no structure beneath. The continuous burgundy frame draws a clear geometric outline, while the soft sling gives the chair a relaxed, almost temporary quality — as though the cloth were simply laid over the bars for the afternoon. The result sits between architecture and ease: precise in line, generous in comfort. Drape suits reading corners, bedrooms, and calm lounge settings.',
+   specs:{Material:'Powder-coated tubular metal, draped textile',Type:'Lounge / armchair',Finish:'Oxblood',Seat:'Suspended sling',Year:'2025'}},
+  {n:'Maglia',c:'Seating Collection',cat:'Furniture',y:2025,
+   prev:MAG_1,hover:MAG_4,page:MAG_5,
+   gallery:[MAG_5,MAG_1,MAG_4,MAG_2,MAG_3],
+   desc:'Maglia floats soft upholstery on an open wire grid. The frame is built from a fine mesh of welded rod, curved in a single continuous gesture from floor to backrest, while plush burgundy cushions rest within it like a body held in a net. The contrast is the whole idea — the rigid, transparent cage against the soft, opaque seat; industrial structure against domestic comfort. Light passes straight through the base, so each piece reads as weightless despite its generous proportions. The collection spans a chair, an armchair, a chaise, and a sofa, unified by the same gridded shell and deep oxblood palette. Maglia suits gallery-like interiors, lobbies, and rooms where furniture is meant to be seen in the round.',
+   specs:{Material:'Welded steel mesh, upholstery',Pieces:'Chair · Armchair · Chaise · Sofa',Frame:'Open wire grid',Finish:'Oxblood',Year:'2025'}},
+  {n:'Lume',c:'Lighting Collection',cat:'Lighting',y:2025,
+   prev:LUME_TABLE,hover:LUME_CLUSTER,page:LUME_PEND,
+   gallery:[LUME_PEND,LUME_TABLE,LUME_CLUSTER,LUME_WALL],
+   desc:'Lume is built around a single warm gesture — a softly tapered shade that glows like a held flame. Rendered in white opal glass on a slim bronze stem, the form is carried across a table lamp, a wall sconce, and pendants in single and linear arrangements. The light is gentle and enveloping, diffused evenly through the shade to cast a calm, candle-like warmth rather than a direct beam. The dark bronze hardware grounds each piece, letting the luminous shade float above it. Lume is made for bedrooms, dining rooms, and quiet evening spaces — wherever light is meant to soften a room rather than fill it.',
+   specs:{Material:'Opal glass, bronze',Pieces:'Table · Wall · Pendant · Linear',Finish:'Dark bronze',Light:'Warm, fully diffused',Year:'2025'}},
+  {n:'Slide',c:'Lighting Collection',cat:'Lighting',y:2025,
+   prev:SLIDE_FLOOR,hover:SLIDE_PEND,page:SLIDE_PEND,
+   gallery:[SLIDE_PEND,SLIDE_FIN,SLIDE_TABLE,SLIDE_FLOOR],
+   desc:'Slide is a lighting collection organised around a single moving part — a softly glowing opal glass diffuser that slides freely along a slim metal rod. The position of the light becomes the gesture: raised high for an ambient glow, dropped low to pool light on a surface. The ovoid shade reads as a quiet luminous bead threaded onto a fine line, carried across a table lamp, a floor lamp, and pendants in single and paired arrangements. Offered in brushed nickel and warm brass, Slide pairs the precision of the rod with the full, soft diffusion of hand-blown opal glass. It is made for considered interiors where light should feel adjustable, personal, and calm.',
+   specs:{Material:'Hand-blown opal glass, metal rod',Pieces:'Table · Floor · Pendant',Mechanism:'Sliding diffuser',Finish:'Brushed nickel · Brass',Year:'2025'}},
+  {n:'Maze',c:'Surfaces',cat:'Surfaces',y:2025,
+   prev:MAZE_1,hover:MAZE_6,page:MAZE_4,
+   gallery:[MAZE_1,MAZE_4,MAZE_2,MAZE_7,MAZE_3,MAZE_5,MAZE_6],
+   desc:'Maze is a ceramic surface collection built on a generative principle. Rather than drawing a repeating motif by hand, the studio wrote a dedicated piece of software to generate the labyrinth pattern — an algorithm that grows a unique, non-repeating maze across every tile, so that no two surfaces are ever identical. The relief is pressed into warm neutral porcelain, catching light along its raised paths while the recesses hold a soft shadow. Across a wall the effect reads as a calm woven texture; up close it reveals an endless, meandering line. Maze is made for bathrooms, spas, and quiet architectural spaces where a surface should feel crafted rather than printed — available in wall and floor formats within a single tonal family.',
+   specs:{Material:'Pressed porcelain, relief',Pattern:'Generative — custom software',Repeat:'None — every tile unique',Format:'Wall · Floor',Year:'2025'}},
+  {n:'Treus',c:'Door Handle',cat:'Objects',y:2025,
+   prev:TREUS_DOOR,page:TREUS_DOOR,
+   desc:'Treus is a door handle conceived as a small sculpture for the hand. Its folded form draws from the geometry of a seat — a continuous surface that turns and cradles, scaled down to fit the palm and resolved as a single cast piece. Mounted on a door it reads as a quiet object rather than hardware, catching light across its brushed facets and inviting touch before use. Cast in solid brass with a warm patinated finish, Treus is made for considered interiors where even the smallest gesture — opening a door — is given form and weight.',
+   specs:{Material:'Cast brass',Finish:'Brushed, patinated',Type:'Lever door handle',Form:'Sculptural — single cast',Year:'2025'}},
+  {n:'Burgundy',c:'Seating Collection',cat:'Furniture',y:2025,
+   prev:BURG_1,hover:BURG_3,page:BURG_1,
+   gallery:[BURG_1,BURG_3,BURG_5,BURG_4,BURG_2],
+   desc:'Burgundy is a complete seating collection unified by a single colour and a single idea — that a chair can feel both architectural and warm. The range moves through a woven dining chair, two lacquered dining chairs, bar stools, and a wheeled lounger, each built on the same tapered tubular language. Two materials carry the family: a glossy lacquered frame and hand-woven cord. The collection sits comfortably in indoor dining rooms and covered outdoor terraces alike, where the durable weave and powder-coated frame are equally at home. The deep oxblood finish gives the whole system a confident, restrained identity — present without ever shouting.',
+   specs:{Material:'Powder-coated metal, woven cord, lacquer',Pieces:'Dining chair · Bar stools · Lounger',Finish:'Gloss oxblood',Use:'Indoor / covered outdoor',Year:'2025'}},
+  {n:'Rope Chair',c:'Self-initiated',cat:'Furniture',y:2024,
+   prev:ROPE_FRONT,hover:ROPE_DETAIL,page:ROPE_LIFE,
+   gallery:[ROPE_LIFE,ROPE_FRONT,ROPE_SIDE,ROPE_DETAIL],
+   desc:'A dining chair designed as a study of lightness, rhythm, and tactile structure. A minimal tubular frame combines with a woven seat and backrest, creating a clear graphic silhouette while keeping the chair visually soft. A continuous metal tube forms the base, legs, and back support, while the cord weaving adds texture and a hand-crafted character. The deep burgundy colour gives the object a warmer, more expressive identity.',
+   specs:{Material:'Powder-coated metal, woven cord',Dimensions:'H 780 × W 520 × D 560mm',Weight:'5–7kg',Year:'2024'}},
+];
+
+/* ── render index ── */
+const idx=document.getElementById('idx');
+idx.innerHTML=PROJECTS.map((p,i)=>`
+  <div class="idx-row" data-i="${i}" role="button" tabindex="0" aria-label="${p.n} — ${p.cat}, ${p.y}">
+    <div class="idx-thumb">${p.prevVideo?`<video src="${p.prev}" autoplay muted loop playsinline aria-label="${p.n}"></video>`:`<img src="${SM(p.prev)}" srcset="${SM(p.prev)} 640w, ${p.prev} 1600w" sizes="100vw" loading="lazy" decoding="async" alt="${p.n}">`}</div>
+    <span class="idx-num">${String(i+1).padStart(2,'0')}</span>
+    <span class="idx-name">${p.n}</span>
+    <span class="idx-cat">${p.cat}</span>
+    <span class="idx-year">${p.y}</span>
+  </div>`).join('');
+document.getElementById('workCount').textContent=PROJECTS.length+' projects';
+
+/* ── floating preview ── */
+const preview=document.getElementById('preview');
+let mx=0,my=0,px=0,py=0;
+document.querySelectorAll('.idx-row').forEach(row=>{
+  const p=PROJECTS[+row.dataset.i];
+  // scrub set: full gallery if present, else the single preview
+  const imgs = (p.gallery && p.gallery.length) ? p.gallery : (p.prev ? [p.prev] : []);
+  let curIdx = -1;
+
+  let acc=0, lastX=null;
+  const STEP=46; // px of mouse movement per frame change
+
+  function render(idx){
+    const src = imgs[idx];
+    const isVid = (src===p.prev && p.prevVideo);
+    preview.innerHTML = isVid
+      ? `<video src="${src}" autoplay muted loop playsinline></video>`
+      : `<img src="${SM(src)}" alt="" decoding="async">`;
+  }
+
+  row.addEventListener('mouseenter',()=>{
+    if(!imgs.length) return;
+    curIdx=0; acc=0; lastX=null;
+    render(0);
+    preview.classList.add('on');
+    pfStart();
+  });
+  row.addEventListener('mousemove',(e)=>{
+    if(imgs.length<=1) return;
+    if(lastX===null){ lastX=e.clientX; return; }
+    acc += (e.clientX - lastX);
+    lastX = e.clientX;
+    let changed=false;
+    while(acc>=STEP){ curIdx=(curIdx+1)%imgs.length; acc-=STEP; changed=true; }
+    while(acc<=-STEP){ curIdx=(curIdx-1+imgs.length)%imgs.length; acc+=STEP; changed=true; }
+    if(changed) render(curIdx);
+  });
+  row.addEventListener('mouseleave',()=>{preview.classList.remove('on');});
+  row.addEventListener('click',()=>openPP(+row.dataset.i));
+  row.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();openPP(+row.dataset.i);}
+  });
+});
+
+let pfOn=false;
+function previewFollow(){
+  if(!preview.classList.contains('on')){pfOn=false;return;}
+  px+=(mx-px)*.12; py+=(my-py)*.12;
+  preview.style.left=px+'px'; preview.style.top=py+'px';
+  requestAnimationFrame(previewFollow);
+}
+function pfStart(){ if(!pfOn){pfOn=true; px=mx; py=my; previewFollow();} }
+
+/* ── project page ── */
+const pp=document.getElementById('pp');
+function openPP(i,fromPop){
+  const p=PROJECTS[i];
+  document.getElementById('ppNum').textContent=String(i+1).padStart(2,'0')+' / '+String(PROJECTS.length).padStart(2,'0');
+  document.getElementById('ppName').textContent=p.n;
+  document.getElementById('ppClient').textContent=p.cat+' · '+p.y;
+  document.getElementById('ppDesc').textContent=p.desc||'';
+  const hero=document.getElementById('ppHero');
+  const gal=document.getElementById('ppGallery');
+  const hasGallery = p.gallery && p.gallery.length;
+  if(hasGallery){
+    // gallery's first (full-width) image acts as the hero — no separate hero, no duplication
+    hero.style.display='none';
+    hero.innerHTML='';
+    gal.innerHTML=p.gallery.map((src,gi)=>`<div class="pp-gal-img"><img src="${src}" loading="lazy" decoding="async" alt="${p.n} — view ${gi+1}"></div>`).join('');
+    gal.style.display='grid';
+  } else if(p.page){
+    // single project — show one hero (image or video)
+    hero.innerHTML = p.pageVideo
+      ? `<video src="${p.page}" autoplay muted loop playsinline></video>`
+      : `<img src="${p.page}" alt="${p.n}">`;
+    hero.style.display='block';
+    gal.innerHTML=''; gal.style.display='none';
+  } else {
+    hero.style.display='none'; gal.innerHTML=''; gal.style.display='none';
+  }
+  const specs=document.getElementById('ppSpecs');
+  specs.innerHTML=Object.entries(p.specs||{}).map(([k,v])=>`<div><span>${k}</span><span>${v}</span></div>`).join('');
+  pp.scrollTop=0;
+  pp.classList.remove('animate');
+  void pp.offsetWidth;
+  pp.classList.add('open','animate');
+  document.body.style.overflow='hidden';
+  ppLastFocus=document.activeElement;
+  if(!fromPop){
+    try{ history.pushState({pp:i},'','#/work/'+slugOf(p)); }catch(e){}
+  }
+  document.getElementById('ppBack').focus();
+}
+let ppLastFocus=null;
+function closePP(fromPop){
+  if(!pp.classList.contains('open')) return;
+  pp.classList.remove('open');document.body.style.overflow='';
+  if(!fromPop && location.hash.indexOf('#/work/')===0){
+    try{ history.pushState({},'',location.pathname+location.search); }catch(e){}
+  }
+  if(ppLastFocus&&ppLastFocus.focus){ppLastFocus.focus();ppLastFocus=null;}
+}
+window.addEventListener('popstate',e=>{
+  if(e.state&&typeof e.state.pp==='number'){openPP(e.state.pp,true);}
+  else closePP(true);
+});
+(function(){
+  const m=location.hash.match(/^#\/work\/(.+)$/);
+  if(!m) return;
+  const i=PROJECTS.findIndex(p=>slugOf(p)===m[1]);
+  if(i>-1){ try{history.replaceState({pp:i},'',location.hash);}catch(e){} openPP(i,true); }
+})();
+document.getElementById('ppBack').addEventListener('click',()=>closePP());
+document.getElementById('ppClose').addEventListener('click',()=>closePP());
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePP();});
+
+/* ── cursor ── */
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,.idx-row,.pp-back,nav').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+/* ── intro ── */
+(function(){
+  const intro=document.getElementById('intro');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    intro.style.display='none';
+    return;
+  }
+  const pct=document.getElementById('intro-pct');
+  const bar=document.getElementById('intro-bar');
+  const t0=Date.now(),DUR=900;
+  document.body.style.overflow='hidden';
+  function tick(){
+    const r=Math.min(1,(Date.now()-t0)/DUR);
+    const e=1-Math.pow(1-r,2.5);
+    pct.textContent=Math.floor(e*100);
+    bar.style.width=(e*100)+'%';
+    if(r>=1){
+      intro.classList.add('gone');
+      document.body.style.overflow='';
+      setTimeout(()=>intro.style.display='none',650);
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+
+/* ════════════════════════════════════════
+   HERO — floating product field (zero-g)
+   small product tiles, cursor pushes them
+   away with acceleration then settle to rest
+════════════════════════════════════════ */
+(function(){
+  const mount=document.getElementById('hero3d');
+  if(!mount) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas=document.createElement('canvas');
+  mount.appendChild(canvas);
+  const ctx=canvas.getContext('2d');
+  let w,h,dpr;
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio,2);
+    w=mount.clientWidth; h=mount.clientHeight;
+    canvas.width=w*dpr; canvas.height=h*dpr;
+    canvas.style.width=w+'px'; canvas.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  // product images (already embedded as consts)
+  const srcs=[
+    LIMAN_HERO,LIMAN_PAIR,LIMAN_ANGLE,LIMAN_ARM,LIMAN_TOP,LIMAN_LEG,
+    BURG_1,BURG_2,BURG_3,BURG_4,BURG_5,
+    CORD_1,CORD_2,CORD_3,CORD_4,
+    NABA_1,NABA_2,NABA_3,
+    SHEP_1,SHEP_2,SHEP_3,SHEP_5,SHEP_6,
+    POLE_1,POLE_2,POLE_3,POLE_4,
+    EMBER_1,EMBER_2,EMBER_3,EMBER_4,
+    TREC_1,TREC_2,TREC_3,TREC_4,
+    DRAPE_2,DRAPE_3,DRAPE_PREV,
+    MAG_1,MAG_2,MAG_3,MAG_4,MAG_5,
+    LUME_TABLE,LUME_PEND,LUME_WALL,LUME_CLUSTER,
+    MAZE_1,MAZE_2,MAZE_3,MAZE_4,MAZE_5,MAZE_6,MAZE_7,
+    TREUS_DOOR,IMG2,
+    ROPE_FRONT,ROPE_LIFE,ROPE_DETAIL,ROPE_SIDE].map(TILE);
+  const imgs=srcs.map(s=>{const im=new Image(); im.src=s; return im;});
+
+  const MOB=window.innerWidth<760;
+  const COUNT=MOB?26:52;
+  const SIZE=MOB?40:44;   // uniform small tile
+  const REPEL=120;        // cursor influence radius
+  const PUSH=2.6;         // push strength (initial acceleration)
+  const FRICTION=0.93;    // deceleration → settle to static
+  const DRIFT=MOB?0.02:0.012;  // faint ambient float (space)
+
+  const ps=[];
+  for(let i=0;i<COUNT;i++){
+    ps.push({
+      x:Math.random()*w, y:Math.random()*h,
+      vx:0, vy:0,
+      img:imgs[i%imgs.length],
+      s:SIZE*(0.85+Math.random()*0.3),
+      rot:(Math.random()-0.5)*0.5
+    });
+  }
+
+  let mx=-9999,my=-9999;
+  window.addEventListener('mousemove',e=>{
+    const r=mount.getBoundingClientRect();
+    mx=e.clientX-r.left; my=e.clientY-r.top;
+  },{passive:true});
+  mount.addEventListener('mouseleave',()=>{mx=-9999;my=-9999;});
+  window.addEventListener('mouseout',e=>{ if(!e.relatedTarget){mx=-9999;my=-9999;} });
+  // touch: dragging a finger pushes the tiles
+  window.addEventListener('touchmove',e=>{
+    if(e.touches&&e.touches[0]){
+      const r=mount.getBoundingClientRect();
+      mx=e.touches[0].clientX-r.left; my=e.touches[0].clientY-r.top;
+    }
+  },{passive:true});
+  window.addEventListener('touchend',()=>{mx=-9999;my=-9999;});
+
+  function drawTile(im,x,y,s,rot){
+    if(!im.complete||!im.naturalWidth) return;
+    const sc=Math.max(s/im.naturalWidth, s/im.naturalHeight);
+    const dw=im.naturalWidth*sc, dh=im.naturalHeight*sc;
+    const r=7;
+    ctx.save();
+    ctx.translate(x,y);
+    ctx.rotate(rot);
+    ctx.beginPath();
+    ctx.moveTo(-s/2+r,-s/2);
+    ctx.arcTo(s/2,-s/2,s/2,s/2,r);
+    ctx.arcTo(s/2,s/2,-s/2,s/2,r);
+    ctx.arcTo(-s/2,s/2,-s/2,-s/2,r);
+    ctx.arcTo(-s/2,-s/2,s/2,-s/2,r);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(im,-dw/2,-dh/2,dw,dh);
+    ctx.restore();
+  }
+
+  let rafId=null,running=false,inView=true;
+  function start(){ if(!running&&inView&&!document.hidden){running=true;rafId=requestAnimationFrame(frame);} }
+  function stop(){ running=false; if(rafId)cancelAnimationFrame(rafId); }
+  new IntersectionObserver(es=>{ inView=es[0].isIntersecting; inView?start():stop(); }).observe(mount);
+  document.addEventListener('visibilitychange',()=>{ document.hidden?stop():start(); });
+  function frame(){
+    rafId=requestAnimationFrame(frame);
+    ctx.clearRect(0,0,w,h);
+    for(const p of ps){
+      // cursor repulsion — push away
+      const dx=p.x-mx, dy=p.y-my;
+      const d=Math.hypot(dx,dy);
+      if(d<REPEL && d>0.01){
+        const f=(1-d/REPEL)*PUSH;
+        p.vx+=(dx/d)*f; p.vy+=(dy/d)*f;
+      }
+      // faint ambient drift (zero-g float)
+      p.vx+=(Math.random()-0.5)*DRIFT;
+      p.vy+=(Math.random()-0.5)*DRIFT;
+      // friction → decelerate to static
+      p.vx*=FRICTION; p.vy*=FRICTION;
+      p.x+=p.vx; p.y+=p.vy;
+      // wrap around edges
+      const m=p.s;
+      if(p.x<-m)p.x=w+m; else if(p.x>w+m)p.x=-m;
+      if(p.y<-m)p.y=h+m; else if(p.y>h+m)p.y=-m;
+      drawTile(p.img,p.x,p.y,p.s,p.rot);
+    }
+  }
+  start();
+})();
+
+
+/* ── CONTACT DRAWER ── */
+(function(){
+  const dr=document.getElementById('cDrawer');
+  let lastFocus=null;
+  function open(){
+    lastFocus=document.activeElement;
+    dr.classList.add('open');document.body.style.overflow='hidden';
+    setTimeout(()=>document.getElementById('cfName').focus(),400);
+  }
+  function close(){
+    if(!dr.classList.contains('open')) return;
+    dr.classList.remove('open');document.body.style.overflow='';
+    if(lastFocus&&lastFocus.focus){lastFocus.focus();lastFocus=null;}
+  }
+  document.querySelectorAll('a[href="#contact"]').forEach(a=>{
+    a.addEventListener('click',e=>{e.preventDefault();open();});
+  });
+  dr.querySelector('.cd-scrim').addEventListener('click',close);
+  dr.querySelector('.cd-x').addEventListener('click',close);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+
+  const status=document.getElementById('cfStatus');
+  function setStatus(msg,isErr){
+    status.textContent=msg;
+    status.classList.add('show');
+    status.classList.toggle('error',!!isErr);
+  }
+  document.getElementById('cfSend').addEventListener('click',()=>{
+    const f=id=>document.getElementById(id);
+    const n=f('cfName'),em=f('cfEmail'),co=f('cfCompany'),ms=f('cfMsg');
+    [n,em,ms].forEach(el=>el.classList.remove('err'));
+    const bad=[];
+    if(!n.value.trim())bad.push(n);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim()))bad.push(em);
+    if(!ms.value.trim())bad.push(ms);
+    if(bad.length){
+      bad.forEach(el=>el.classList.add('err'));
+      setStatus('Please fill in your name, a valid email, and a short message.',true);
+      bad[0].focus();
+      return;
+    }
+    const subj=encodeURIComponent('Project enquiry — '+n.value.trim());
+    const body=encodeURIComponent('Name: '+n.value.trim()+'\nEmail: '+em.value.trim()+'\nCompany: '+co.value.trim()+'\n\n'+ms.value.trim());
+    window.location.href='mailto:dmitrchikh@gmail.com?subject='+subj+'&body='+body;
+    setStatus('Your email app should open with the message prefilled. If nothing happened, write directly via the links below.');
+  });
+})();
+
+
+</script>
+
+
+</body>
+</html>
